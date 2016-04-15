@@ -4,7 +4,9 @@
 var port = parseInt(process.argv[2]);
 var debug = JSON.parse(process.argv[3]);
 var home_dir = process.argv[4];
-var root_dir = process.env['COMX_SDK'];
+var root_dir = process.env['COMX_SDK'];
+
+var runningLog = "Y:\\nxcocadframework\\data\\Running.log";
 
 var deamon_service_id = "0x86d51be5-0x4254-0x4848-0x88-0xf2-0xb5-0x8a-0x62-0x04-0xfb-0x79";
 process.chdir(home_dir + 'js/');
@@ -162,4 +164,50 @@ websocket.on('ShowDeamonMgr', function(data){
         );
 
     });
-});
+});
+//OnActionFire
+websocket.on('OnActionFire', function(data){
+    var actionID = data.parameters.actionID;
+    var clientID = data.parameters.clientID;
+    var parameters = data.parameters.parameters;
+    appendFileSync(runningLog, "Received message from client:" + clientID + " actionID:" + actionID);
+    data.parameters.ret = "Server has received the message: clientID:" + clientID + " actionID:" + actionID;
+    websocket.send(data);
+    if(actionID == "CreatePoint")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.CoordinateX + " " + parameters.CoordinateY + " " + parameters.CoordinateZ);
+        websocket.Invoke('CoCADCreatePoint', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });        
+        }
+
+});
+
+//InvokeTestConnection
+websocket.on('InvokeTestConnection', function(data){
+    require('fs').writeFileSync(runningLog, data.parameters.res + "\n");
+});
+
+//Util
+
+function sleep(n)
+
+{
+
+    var start=new Date().getTime();
+
+    while(true) if(new Date().getTime()-start>n) break;
+
+}
+
+
+
+function appendFileSync(fileName, data)
+
+{
+
+    var logString = require('fs').readFileSync(fileName);
+
+    require('fs').writeFileSync(fileName, logString + data + "\n");
+
+}
