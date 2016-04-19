@@ -170,14 +170,14 @@ websocket.on('OnActionFire', function(data){
     var actionID = data.parameters.actionID;
     var clientID = data.parameters.clientID;
     var parameters = data.parameters.parameters;
-    appendFileSync(runningLog, "Received message from client:" + clientID + " actionID:" + actionID);
+    //appendFileSync(runningLog, "Received message from client:" + clientID + " actionID:" + actionID);
     data.parameters.ret = "Server has received the message: clientID:" + clientID + " actionID:" + actionID;
     websocket.send(data);
     if(actionID == "CreatePoint")
     {
-        appendFileSync(runningLog, "Parameters:" + parameters.CoordinateX + " " + parameters.CoordinateY + " " + parameters.CoordinateZ);
+        //appendFileSync(runningLog, "Parameters:" + parameters.CoordinateX + " " + parameters.CoordinateY + " " + parameters.CoordinateZ);
         websocket.Invoke('CoCADCreatePoint', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
-            appendFileSync(runningLog, data.parameters.ret);
+            //appendFileSync(runningLog, data.parameters.ret);
         });        
         }
 
@@ -185,7 +185,7 @@ websocket.on('OnActionFire', function(data){
 
 //InvokeTestConnection
 websocket.on('InvokeTestConnection', function(data){
-    require('fs').writeFileSync(runningLog, data.parameters.res + "\n");
+    //appendFileSync(runningLog, data.parameters.res + "\n");
 });
 
 //Util

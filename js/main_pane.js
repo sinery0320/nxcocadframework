@@ -6,7 +6,9 @@ var websocket = require('socket.io/comx.websocket.js');
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //System Pre-define functions 
 
-var port = 32768;
+var port = 32768;
+
+var runningLog = "Y:\\nxcocadframework\\data\\Running.log";
 
 function MakeSurePortValid()
 {
@@ -58,7 +60,12 @@ function OnInitializeData()
                 websocket.Invoke('ShowDeamonMgr', {}, function(data){});
             }
         }
-    });
+    });
+    //Create log file
+    comx.sys.CreateFileHandler('runningLog', runningLog);
+    //comx.file.runningLog = Date() + '\n';
+    comx.file.runningLog = '';
+    comx.sys.CloseFileHandler('runningLog');
 }
 
 function OnHide()
@@ -92,7 +99,8 @@ function OnAnimate()
 
 function OnCloseForm()
 {
-    websocket.Stop();
+    websocket.Stop();
+    comx.sys.RemoveFile(runningLog);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
