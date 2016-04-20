@@ -178,9 +178,57 @@ websocket.on('OnActionFire', function(data){
         appendFileSync(runningLog, "Parameters:" + parameters.CoordinateX + " " + parameters.CoordinateY + " " + parameters.CoordinateZ);
         websocket.Invoke('CoCADCreatePoint', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
             appendFileSync(runningLog, data.parameters.ret);
-        });        
+        });
     }
-
+    else if(actionID == "CreateRect")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.leftX + " " + parameters.leftY + " " + parameters.leftZ + " " + parameters.rightX + " " + parameters.rightY + " " + parameters.rightZ);
+        websocket.Invoke('CoCADCreateRect', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "CreateSketch")
+    {
+        appendFileSync(runningLog, "Parameters:null");
+        websocket.Invoke('CoCADCreateSketch', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "Extrude")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.height + " " + parameters.lineNum + " " + parameters.sketchNum + " " + parameters.sketchID);
+        websocket.Invoke('CoCADExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "CreatePlane")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.x);
+        websocket.Invoke('CoCADCreatePlane', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "DrawCircle")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.x + " " + parameters.y + " " + parameters.z + " " + parameters.r);
+        websocket.Invoke('CoCADDrawCircle', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "CreateSketchOnExtrude")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.extrudeNum + " " + parameters.str1 + " " + parameters.str2);
+        websocket.Invoke('CoCADCreateSketchOnExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
+    else if(actionID == "ReverseExtrude")
+    {
+        appendFileSync(runningLog, "Parameters:" + parameters.sketchID + " " + parameters.sketchNum + " " + parameters.extrudeLine + " " + parameters.targetExtrude + " " + parameters.length);
+        websocket.Invoke('CoCADReverseExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
+            appendFileSync(runningLog, data.parameters.ret);
+        });
+    }
 });
 
 //InvokeTestConnection
