@@ -8,7 +8,7 @@ var websocket = require('socket.io/comx.websocket.js');
 
 var port = 32768;
 
-var runningLog = "Y:\\nxcocadframework\\data\\Running.log";
+var runningLog = "Y:\\nxcocadframework\\data\\Running.log";//log file
 
 function MakeSurePortValid()
 {
@@ -63,8 +63,8 @@ function OnInitializeData()
     });
     //Create log file
     comx.sys.CreateFileHandler('runningLog', runningLog);
-    //comx.file.runningLog = Date() + '\n';
-    comx.file.runningLog = '';
+    comx.file.runningLog = Date() + '\n';
+    //comx.file.runningLog = '';
     comx.sys.CloseFileHandler('runningLog');
 }
 
@@ -100,7 +100,7 @@ function OnAnimate()
 function OnCloseForm()
 {
     websocket.Stop();
-    comx.sys.RemoveFile(runningLog);
+    //comx.sys.RemoveFile(runningLog);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
