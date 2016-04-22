@@ -182,7 +182,7 @@ websocket.on('OnActionFire', function(data){
     }
     else if(actionID == "CreateRect")
     {
-        appendFileSync(runningLog, "Parameters:" + parameters.leftX + " " + parameters.leftY + " " + parameters.leftZ + " " + parameters.rightX + " " + parameters.rightY + " " + parameters.rightZ);
+        appendFileSync(runningLog, "Parameters:" + parameters.para1 + " " + parameters.para2 + " " + parameters.para3 + " " + parameters.para4 + " " + parameters.para5 + " " + parameters.overloadType);
         websocket.Invoke('CoCADCreateRect', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
             appendFileSync(runningLog, data.parameters.ret);
         });
