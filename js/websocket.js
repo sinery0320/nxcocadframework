@@ -196,7 +196,7 @@ websocket.on('OnActionFire', function(data){
     }
     else if(actionID == "Extrude")
     {
-        appendFileSync(runningLog, "Parameters:" + parameters.height + " " + parameters.lineNum + " " + parameters.sketchNum + " " + parameters.sketchID);
+        appendFileSync(runningLog, "Parameters:" + parameters.height + " " + parameters.targetSketchName + " " + parameters.setName);// + " " + parameters.sketchID);
         websocket.Invoke('CoCADExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
             appendFileSync(runningLog, data.parameters.ret);
         });
@@ -217,14 +217,14 @@ websocket.on('OnActionFire', function(data){
     }
     else if(actionID == "CreateSketchOnExtrude")
     {
-        appendFileSync(runningLog, "Parameters:" + parameters.extrudeNum + " " + parameters.str1 + " " + parameters.str2);
+        appendFileSync(runningLog, "Parameters:" + parameters.targetExtrude + " " + parameters.str1 + " " + parameters.str2 + " " + parameters.setName);
         websocket.Invoke('CoCADCreateSketchOnExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
             appendFileSync(runningLog, data.parameters.ret);
         });
     }
     else if(actionID == "ReverseExtrude")
     {
-        appendFileSync(runningLog, "Parameters:" + parameters.sketchID + " " + parameters.sketchNum + " " + parameters.extrudeLine + " " + parameters.targetExtrude + " " + parameters.length);
+        appendFileSync(runningLog, "Parameters:" + parameters.targetSketchName + " " + parameters.targetExtrueName + " " + parameters.setName + " " + parameters.length );//+ " " + parameters.length);
         websocket.Invoke('CoCADReverseExtrude', {'sourceID' : clientID, 'parameters' : parameters}, function(data){
             appendFileSync(runningLog, data.parameters.ret);
         });
