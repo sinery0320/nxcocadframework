@@ -138,7 +138,7 @@ websocket.on('GetPort', function(data){
     websocket.send(data);
 });
 
-var name = 'NXCOCADService';
+var name = 'NXCOCADCAEService';
 
 websocket.on('GetName', function(data){
     data.parameters = {'name' : name};
